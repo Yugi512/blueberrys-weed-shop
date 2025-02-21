@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const data = [{
+export const data = [{
     "name":"GG4",
     "img_url":"https://images.leafly.com/flower-images/gg-4.jpg",
     "type":"Hybrid",
@@ -27,7 +27,16 @@ const data = [{
         "depression":"23%",
         "anxiety":"22%",
         "insomnia":"17%"
-    }
+    },
+    "category": {
+        "name": "flower",
+        "description": "its the plant, as in weed"
+    },
+    "inventory": {
+        "quantity": 10,
+        "availability": true
+    },
+    "price": 25
 },
     {
         "name":"Wedding Cake",
@@ -52,7 +61,16 @@ const data = [{
             "depression":"14%",
             "pain":"12%",
             "insomnia":"8%"
-        }
+        },
+        "category": {
+            "name": "flower",
+            "description": "its the plant, as in weed"
+        },
+        "inventory": {
+            "quantity": 10,
+            "availability": true
+        },
+        "price": 30
     },
     {
         "name":"Runtz",
@@ -77,7 +95,16 @@ const data = [{
             "anxiety":"11%",
             "pain":"7%",
             "ptsd":"6%"
-        }
+        },
+        "category": {
+            "name": "flower",
+            "description": "its the plant, as in weed"
+        },
+        "inventory": {
+            "quantity": 10,
+            "availability": true
+        },
+        "price": 35
     },
     {
         "name":"Gelato",
@@ -102,10 +129,21 @@ const data = [{
             "depression":"18%",
             "pain":"16%",
             "insomnia":"10%"
-        }
+        },
+        "category": {
+            "name": "flower",
+            "description": "its the plant, as in weed"
+        },
+        "inventory": {
+            "quantity": 10,
+            "availability": true
+        },
+        "price": 20
     },]
 
+
 const StrainsList = () => {
+
     return (
         <div className="border-8 border-blue-900 grid grid-cols-5 gap-2">
             {data.map((item: any, index: number) => {
