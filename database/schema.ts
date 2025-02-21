@@ -147,7 +147,7 @@ export const paymentDetailTable = pgTable("payment_detail",{
 export const productTable: any = pgTable("product",{
     id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
     name: varchar("product_name").unique().notNull(),
-    imgUrl: text("img_url").notNull(),
+    imgUrl: text("img_url"),
     type: pgEnum("type",["HYBRID","SATIVA","INDICA"])(),
     price: decimal("price"),
     thcLevel: integer("thc_level"),
@@ -155,11 +155,9 @@ export const productTable: any = pgTable("product",{
     effectsID: uuid("effects_id")
         .references(() => effectsTable.id),
     categoryID: uuid("category_id")
-        .references(() => productCategoryTable.id)
-        .notNull(),
+        .references(() => productCategoryTable.id),
     inventoryID: uuid("inventory_id")
-        .references(() => productInventoryTable.id)
-        .notNull(),
+        .references(() => productInventoryTable.id),
     discountID: uuid("discount_id")
         .references(() => discountTable.id),
     createdAt: timestamp("created_at",{

@@ -1,4 +1,4 @@
-import config from "@/config/config"
+import {config} from "dotenv"
 import {drizzle} from "drizzle-orm/node-postgres";
 import {
     cartItemTable, discountTable, effectsTable, orderDetailTable, orderItemsTable,
@@ -10,7 +10,9 @@ import {
 } from "./schema";
 import {eq, InferSelectModel, InferInsertModel} from "drizzle-orm"
 
-export const db = drizzle(config.env.DATABASE_URL!);
+config({path:'.env.local'})
+
+export const db = drizzle(process.env.DATABASE_URL!);
 // so when accessing the database using queries, as long as they are linked we are able to access the information that they are connected to as in check drizzle studio to see the relations and constantly debug lol
 // May have to write more queries depending on the circumstance ,or I might as well do it inline tbh
 // CRUD operation queries for all main tables
@@ -95,7 +97,7 @@ export const createUserAddress = async (InsertUserAddress: InsertUserAddress) =>
     await db
         .insert(userAddressTable)
         .values(InsertUserAddress)
-        .onConflictDoUpdate({target: userAddressTable.userID, set: InsertUserAddress})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -184,7 +186,7 @@ export const createPaymentDetail = async (InsertPaymentDetail: InsertPaymentDeta
     await db
         .insert(paymentDetailTable)
         .values(InsertPaymentDetail)
-        .onConflictDoUpdate({target: paymentDetailTable.orderID, set: InsertPaymentDetail})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -286,7 +288,7 @@ export const createCartItem = async (InsertCartItem: InsertCartItem) =>
     await db
         .insert(cartItemTable)
         .values(InsertCartItem)
-        .onConflictDoUpdate({target: cartItemTable.id, set: InsertCartItem})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -333,7 +335,7 @@ export const createOrderDetails = async (InsertOrderDetails: InsertOrderDetails)
     await db
         .insert(orderDetailTable)
         .values(InsertOrderDetails)
-        .onConflictDoUpdate({target: orderDetailTable.id, set: InsertOrderDetails})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -390,7 +392,7 @@ export const createOrderItems = async (InsertOrderItems: InsertOrderItems) =>
     await db
         .insert(orderItemsTable)
         .values(InsertOrderItems)
-        .onConflictDoUpdate({target: orderItemsTable.id ,set: InsertOrderItems})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -488,7 +490,7 @@ export const createProduct = async (InsertProduct: InsertProduct) =>
     await db
         .insert(productTable)
         .values(InsertProduct)
-        .onConflictDoUpdate({target: productTable.id, set: InsertProduct})
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -513,8 +515,6 @@ export const deleteProductAndRelatedById = async (id: string) =>
             .where(eq(productTable.id, id))
         await trx.delete(productInventoryTable)
             .where(eq(productInventoryTable.productID, id))
-        await trx.delete(productTable)
-            .where(eq(productTable.id, id))
         await trx.delete(effectsTable)
             .where(eq(effectsTable.productID, id))
     })
@@ -535,6 +535,7 @@ export const createEffects = async (InsertEffects: InsertEffects) =>
     await db
         .insert(effectsTable)
         .values(InsertEffects)
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -599,6 +600,7 @@ export const createProductItem = async (InsertProductItem: InsertProductItem) =>
     await db
         .insert(productInventoryTable)
         .values(InsertProductItem)
+        .onConflictDoNothing()
         .returning();
 
 // update
@@ -632,6 +634,7 @@ export const createDiscount = async (InsertDiscount: InsertDiscount) =>
     await db
         .insert(discountTable)
         .values(InsertDiscount)
+        .onConflictDoNothing()
         .returning();
 
 // update

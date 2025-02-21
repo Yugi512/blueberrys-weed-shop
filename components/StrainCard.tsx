@@ -7,10 +7,13 @@ import {Strain} from "@/types";
 // we need to figure out how to make it so that we can get the receipt and add it the orders then we would also have to add a receipt number to the order details table and then have a function that updates that part of the table and then handle things like refunds and complaints
 
 
-const StrainCard = ({strain} : {strain: Strain}) => {
-    const {name,type ,description, img_url, price, thc_level, effects,inventory} = strain;
+const StrainCard = ({strain} : {strain: Pick<Strain, "name" | "img_url" | "type" | "thc_level" | "description" | "effects" >}) => {
+    const {name,type ,description, img_url,  thc_level ,effects } = strain;
+        // price,inventory
     // destructure the name and then replace the "%20" with spaces
     // we plug in the string with dashes and then we destructure it in the strain/[name] page
+    const onChange = () => console.log("Hiiiiii")
+
     return (
         <div >
             <div id={"image"}>
@@ -20,21 +23,21 @@ const StrainCard = ({strain} : {strain: Strain}) => {
                 <span id={"title"}>
                     <h1>{name}</h1>
                 </span>
-                <div>
-                    <h2>{price}</h2>
-                    <span>{inventory.availability ? "In-Stock" : "Not In-Stock"}</span>
-                </div>
-                <div>
-                    {Object.entries(effects).map(([key,value]) => {
-                        return (
-                            <ul>
-                                <p key={key}>
-                                    {key} : {value}
-                                </p>
-                            </ul>
-                        )
-                    })}
-                </div>
+                {/*<div>*/}
+                {/*    <h2>{price}</h2>*/}
+                {/*    <span>{inventory.availability ? "In-Stock" : "Not In-Stock"}</span>*/}
+                {/*</div>*/}
+                {Object.entries(effects).map(([key,value]) => {
+                    return (
+                    <div key={key} id={key}>
+                        <ul>
+                            <p>
+                                {key} : {value}
+                            </p>
+                        </ul>
+                    </div>
+                    )
+                })}
                 <br/>
                 <div id="options">
                     <select>
@@ -46,7 +49,7 @@ const StrainCard = ({strain} : {strain: Strain}) => {
                     </select>
                 </div>
                 <div id={"quantity"}>
-                    <input id="quantity" type="number" value={1} min={1} max={""} placeholder={""} inputMode={"numeric"} step={1} size={4} />
+                    <input id="quantity" type="number" value={1} min={1} max={""} placeholder={""} inputMode={"numeric"} step={1} size={4} onChange={onChange}/>
                     <button id={"decrease"}> - </button>
                     <button id={"increase"}> + </button>
                 </div>

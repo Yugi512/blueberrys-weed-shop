@@ -30,10 +30,11 @@ interface Strain {
     name: string,
     img_url: string,
     type: string,
+    most_common_terpene: string,
     price: number,
     thc_level: string,
     description: string,
-    effects: Effects,
+    effects: Object,
     category: Category,
     inventory: Inventory,
 }

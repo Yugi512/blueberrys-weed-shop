@@ -28,15 +28,7 @@ export const data = [{
         "anxiety":"22%",
         "insomnia":"17%"
     },
-    "category": {
-        "name": "flower",
-        "description": "its the plant, as in weed"
-    },
-    "inventory": {
-        "quantity": 10,
-        "availability": true
-    },
-    "price": 25
+
 },
     {
         "name":"Wedding Cake",
@@ -62,15 +54,7 @@ export const data = [{
             "pain":"12%",
             "insomnia":"8%"
         },
-        "category": {
-            "name": "flower",
-            "description": "its the plant, as in weed"
-        },
-        "inventory": {
-            "quantity": 10,
-            "availability": true
-        },
-        "price": 30
+
     },
     {
         "name":"Runtz",
@@ -96,15 +80,7 @@ export const data = [{
             "pain":"7%",
             "ptsd":"6%"
         },
-        "category": {
-            "name": "flower",
-            "description": "its the plant, as in weed"
-        },
-        "inventory": {
-            "quantity": 10,
-            "availability": true
-        },
-        "price": 35
+
     },
     {
         "name":"Gelato",
@@ -130,15 +106,7 @@ export const data = [{
             "pain":"16%",
             "insomnia":"10%"
         },
-        "category": {
-            "name": "flower",
-            "description": "its the plant, as in weed"
-        },
-        "inventory": {
-            "quantity": 10,
-            "availability": true
-        },
-        "price": 20
+
     },]
 
 

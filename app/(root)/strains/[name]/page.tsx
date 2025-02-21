@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import StrainCard from "@/components/StrainCard";
 import {data} from "@/components/StrainsList";
@@ -5,13 +7,12 @@ import {data} from "@/components/StrainsList";
 const Page = async ({params} : {params: Promise<{name: string}>}) => {
     const name = (await params).name
     const strain = name.replace(/%20/g," ")
+    const strainData = data.find(item => item.name === strain);
 
+    if(!strainData) return <div>Strain not found</div>;
 
-    // if(!strain) return <div>Strain not found</div>;
-    console.log(strain);
-    // return (
-    //     <StrainCard strain={strain} />
-    //     <h1>hello</h1>
-    // )
+    return (
+        <StrainCard strain={strainData} />
+    )
 }
 export default Page
