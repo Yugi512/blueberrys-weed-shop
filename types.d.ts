@@ -1,5 +1,3 @@
-import {EnumValues} from "zod";
-
 interface AuthCredentials {
     username: string,
     firstName: string,

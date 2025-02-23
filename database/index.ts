@@ -566,6 +566,13 @@ export const getProductCategories = async () =>
         .select()
         .from(productCategoryTable);
 
+
+// by name
+export const getCategoryByName = async (name: string) =>
+    await db
+        .select()
+        .from(productCategoryTable)
+        .where(eq(productCategoryTable.name, name))
 // post
 export const createProductCategories = async (InsertProductCategory: InsertProductCategory) =>
     await db
@@ -593,20 +600,20 @@ export const deleteProductCategoryById = async (id: string) =>
 export type InsertProductItem = InferInsertModel<typeof productInventoryTable>;
 export type SelectProductItem = InferSelectModel<typeof productInventoryTable>;
 // get
-export const getProductItems = async () =>
+export const getProductInventory = async () =>
     await db
         .select()
         .from(productInventoryTable);
 
 // post
-export const createProductItem = async (InsertProductItem: InsertProductItem) =>
+export const createProductInventory = async (InsertProductItem: InsertProductItem) =>
     await db
         .insert(productInventoryTable)
         .values(InsertProductItem)
         .returning();
 
 // update
-export const updateProductItem = async (id:string ,SelectProductItem: SelectProductItem) =>
+export const updateProductInventory = async (id:string ,SelectProductItem: SelectProductItem) =>
     await db
         .update(productInventoryTable)
         .set(SelectProductItem)
@@ -614,7 +621,7 @@ export const updateProductItem = async (id:string ,SelectProductItem: SelectProd
         .returning();
 
 // delete
-export const deleteProductItemById = async (id: string) =>
+export const deleteProductInventoryById = async (id: string) =>
     await db
         .delete(productInventoryTable)
         .where(eq(productInventoryTable.id, id))
