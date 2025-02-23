@@ -10,13 +10,13 @@ import {
     getProductByName, getProductInventory,
     getProducts, updateProduct
 } from "@/database/index";
-import {config} from "dotenv";
-import {db} from "@/drizzle";
-import {eq} from "drizzle-orm";
+import {config} from 'dotenv'
+import {eq} from "drizzle-orm"
+
+config({path: '.env.local.local'})
 
 
-config({path:'.env.local'});
-
+getProducts().then(products => {console.log(products);});
 
 // getProducts().then((data) => {
 //     const randomInt = Math.floor(Math.random() * 10) + 1;

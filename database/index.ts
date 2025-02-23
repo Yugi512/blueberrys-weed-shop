@@ -1,5 +1,3 @@
-"use server"
-
 import {
     cartItemTable, discountTable, effectsTable, orderDetailTable, orderItemsTable,
     paymentDetailTable, productCategoryTable, productInventoryTable, productTable,
@@ -8,7 +6,15 @@ import {
     userPaymentTable,
     userTable
 } from "./schema";
-import {db} from "@/drizzle";
+import {config} from 'dotenv'
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
+
+config({path: '.env.local.local'})
+
+const sql = neon("postgresql://blueberry_owner:npg_12guSQFoJEOr@ep-flat-math-a56zax02-pooler.us-east-2.aws.neon.tech/blueberry?sslmode=require");
+const db = drizzle({ client: sql });
+
 import {eq, InferSelectModel, InferInsertModel} from "drizzle-orm"
 
 // so when accessing the database using queries, as long as they are linked we are able to access the information that they are connected to as in check drizzle studio to see the relations and constantly debug lol
@@ -659,3 +665,5 @@ export const deleteDiscountById = async (id: string) =>
         .delete(discountTable)
         .where(eq(discountTable.id, id))
         .returning();
+
+export { db };
