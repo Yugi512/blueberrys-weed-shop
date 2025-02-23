@@ -1,5 +1,5 @@
-import {config} from "dotenv"
-import {drizzle} from "drizzle-orm/node-postgres";
+"use server"
+
 import {
     cartItemTable, discountTable, effectsTable, orderDetailTable, orderItemsTable,
     paymentDetailTable, productCategoryTable, productInventoryTable, productTable,
@@ -8,11 +8,9 @@ import {
     userPaymentTable,
     userTable
 } from "./schema";
+import {db} from "@/drizzle";
 import {eq, InferSelectModel, InferInsertModel} from "drizzle-orm"
 
-config({path:'.env.local'})
-
-export const db = drizzle(process.env.DATABASE_URL!);
 // so when accessing the database using queries, as long as they are linked we are able to access the information that they are connected to as in check drizzle studio to see the relations and constantly debug lol
 // May have to write more queries depending on the circumstance ,or I might as well do it inline tbh
 // CRUD operation queries for all main tables
@@ -49,7 +47,7 @@ export const getUserByEmail = async (email: string) =>
         .limit(1);
 
 // post
-export const createUser = async (InsertUser: InsertUser) =>
+export const createUser = async (InsertUser: InsertUser)     =>
     await db
         .insert(userTable)
         .values(InsertUser)
@@ -415,7 +413,7 @@ export const deleteOrderItemsById = async (id:string) =>
 export type SelectProduct = InferSelectModel<typeof productTable>;
 export type InsertProduct = InferInsertModel<typeof productTable>;
 // get
-export const getrProducts = async () =>
+export const getProducts = async () =>
     await db
         .select()
         .from(productTable);
@@ -436,15 +434,15 @@ export const getProductByName = async (name: string) =>
 export const getProductsEffects = async () =>
     await db
         .select()
-        .from(productTable)
-        .innerJoin(effectsTable, eq(productTable.effectsID, effectsTable.id));
+        .from(effectsTable)
+        .innerJoin(productTable, eq(effectsTable.productID, productTable.id));
 
-export const getProductsEffectsWithEffectsId = async (effectsId: string) =>
-    await db
-        .select()
-        .from(productTable)
-        .innerJoin(effectsTable, eq(productTable.effectsID, effectsId))
-        .limit(1);
+// export const getProductsEffectsWithEffectsId = async (effectsId: string) =>
+//     await db
+//         .select()
+//         .from(productTable)
+//         .innerJoin(effectsTable, eq(productTable.effectsID, effectsId))
+//         .limit(1);
 
 // get product categories
 export const getProductsCategories = async () =>
@@ -477,20 +475,19 @@ export const getProductsInventory = async () =>
     await db
         .select()
         .from(productTable)
-        .innerJoin(productInventoryTable, eq(productTable.inventoryID, productInventoryTable.id));
+        .innerJoin(productTable, eq(productInventoryTable.productID, productTable.id));
 
-export const getProductsInventoryWithInventoryId = async (inventoryId: string) =>
-    await db
-        .select()
-        .from(productTable)
-        .innerJoin(productInventoryTable, eq(productTable.inventoryID, inventoryId));
+// export const getProductsInventoryWithInventoryId = async (inventoryId: string) =>
+//     await db
+//         .select()
+//         .from(productTable)
+//         .innerJoin(productInventoryTable, eq(productTable.inventoryID, inventoryId));
 
 // post
 export const createProduct = async (InsertProduct: InsertProduct) =>
     await db
         .insert(productTable)
         .values(InsertProduct)
-        .onConflictDoNothing()
         .returning();
 
 // update
@@ -506,6 +503,13 @@ export const deleteProductById = async (id: string) =>
     await db
         .delete(productTable)
         .where(eq(productTable.id, id))
+        .returning();
+
+// delete by name
+export const deleteProductByName = async (name: string) =>
+    await db
+        .delete(productTable)
+        .where(eq(productTable.name, name))
         .returning();
 
 // delete all related to product id
@@ -535,7 +539,6 @@ export const createEffects = async (InsertEffects: InsertEffects) =>
     await db
         .insert(effectsTable)
         .values(InsertEffects)
-        .onConflictDoNothing()
         .returning();
 
 // update
@@ -600,7 +603,6 @@ export const createProductItem = async (InsertProductItem: InsertProductItem) =>
     await db
         .insert(productInventoryTable)
         .values(InsertProductItem)
-        .onConflictDoNothing()
         .returning();
 
 // update
@@ -634,7 +636,6 @@ export const createDiscount = async (InsertDiscount: InsertDiscount) =>
     await db
         .insert(discountTable)
         .values(InsertDiscount)
-        .onConflictDoNothing()
         .returning();
 
 // update

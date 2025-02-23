@@ -8,10 +8,10 @@ fs.readFile("leafly_data.json", "utf8", (err, data) => {
     try{
         const array = JSON.parse(data);
         const url = array.map(obj =>  obj.img_url);
-        const filtered = url.filter((obj) => {
+        const filtered = url.filter((obj,index) => {
             if(obj !== "" || obj !== ''){
-                console.log(`{${obj}}`);
-                // console.log(`{ protocol: "https", hostname: ${obj} },`);
+                console.log(`${index}: {${obj}}`);
+
             }
         })
         console.log(filtered)
@@ -19,3 +19,5 @@ fs.readFile("leafly_data.json", "utf8", (err, data) => {
         console.log(error)
     }
 })
+
+

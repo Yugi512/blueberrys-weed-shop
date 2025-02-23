@@ -1,5 +1,5 @@
 {
-  "id": "70b4ad42-4124-4515-9beb-4ee9e5112cef",
+  "id": "6d29ccb8-90ab-4c4e-af1f-d071d931747e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -839,12 +839,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -975,22 +969,21 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "product_name": {
-          "name": "product_name",
+        "name": {
+          "name": "name",
           "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
         "img_url": {
           "name": "img_url",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
         "type": {
           "name": "type",
-          "type": "type",
-          "typeSchema": "public",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -1002,30 +995,24 @@
         },
         "thc_level": {
           "name": "thc_level",
-          "type": "integer",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
         "description": {
           "name": "description",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
-        "effects_id": {
-          "name": "effects_id",
-          "type": "uuid",
+        "most_common_terpene": {
+          "name": "most_common_terpene",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
         "category_id": {
           "name": "category_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "inventory_id": {
-          "name": "inventory_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -1060,38 +1047,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "product_effects_id_effects_id_fk": {
-          "name": "product_effects_id_effects_id_fk",
-          "tableFrom": "product",
-          "tableTo": "effects",
-          "columnsFrom": [
-            "effects_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
         "product_category_id_product_category_id_fk": {
           "name": "product_category_id_product_category_id_fk",
           "tableFrom": "product",
           "tableTo": "product_category",
           "columnsFrom": [
             "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "product_inventory_id_product_inventory_id_fk": {
-          "name": "product_inventory_id_product_inventory_id_fk",
-          "tableFrom": "product",
-          "tableTo": "product_inventory",
-          "columnsFrom": [
-            "inventory_id"
           ],
           "columnsTo": [
             "id"
@@ -1122,11 +1083,11 @@
             "id"
           ]
         },
-        "product_product_name_unique": {
-          "name": "product_product_name_unique",
+        "product_name_unique": {
+          "name": "product_name_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "product_name"
+            "name"
           ]
         }
       },
@@ -1473,7 +1434,16 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.role": {
+      "name": "role",
+      "schema": "public",
+      "values": [
+        "USER",
+        "ADMIN"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

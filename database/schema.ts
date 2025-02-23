@@ -9,6 +9,9 @@ import {
     timestamp, decimal, boolean
 } from "drizzle-orm/pg-core";
 
+export const ROLE = pgEnum('role', ["USER","ADMIN"])
+
+
 // Users
 export const userTable = pgTable("user",{
     id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
@@ -17,7 +20,7 @@ export const userTable = pgTable("user",{
     lastName: varchar("last_name",{length:30}).notNull(),
     email: text("email").unique().notNull(),
     password: text("password").notNull(),
-    role: pgEnum('role',["USER","ADMIN"])().default('USER'),
+    role: ROLE('role').default('USER'),
     lastActivityDate: date("last_activity_date").defaultNow(),
     createdAt: timestamp("created_at",{
         withTimezone: true
@@ -144,20 +147,48 @@ export const paymentDetailTable = pgTable("payment_detail",{
     }).defaultNow()
 })
 // Products
-export const productTable: any = pgTable("product",{
+export const productCategoryTable = pgTable("product_category",{
     id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
-    name: varchar("product_name").unique().notNull(),
-    imgUrl: text("img_url"),
-    type: pgEnum("type",["HYBRID","SATIVA","INDICA"])(),
-    price: decimal("price"),
-    thcLevel: integer("thc_level"),
+    name: varchar("name").notNull(),
+    createdAt: timestamp("created_at",{
+        withTimezone: true
+    }).defaultNow(),
+    modifiedAt: timestamp("modified_at",{
+        withTimezone: true
+    }).defaultNow(),
+    deleted_at: timestamp("deleted_at",{
+        withTimezone: true
+    }).defaultNow()
+})
+
+export const discountTable = pgTable("discount",{
+    id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
+    name: varchar("name"),
     description: text("description"),
-    effectsID: uuid("effects_id")
-        .references(() => effectsTable.id),
+    discountPercentage: decimal("discount_percentage"),
+    active: boolean("active"),
+    createdAt: timestamp("created_at",{
+        withTimezone: true
+    }).defaultNow(),
+    modifiedAt: timestamp("modified_at",{
+        withTimezone: true
+    }).defaultNow(),
+    deleted_at: timestamp("deleted_at",{
+        withTimezone: true
+    }).defaultNow()
+})
+
+export const productTable = pgTable("product",{
+    id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
+    name: varchar("name").unique().notNull(),
+    imgUrl: varchar("img_url"),
+    type: varchar("type"),
+    price: decimal("price"),
+    thcLevel: varchar("thc_level"),
+    description: varchar("description"),
+    mostCommonTerpene: varchar("most_common_terpene"),
     categoryID: uuid("category_id")
-        .references(() => productCategoryTable.id),
-    inventoryID: uuid("inventory_id")
-        .references(() => productInventoryTable.id),
+    .references(() => productCategoryTable.id),
     discountID: uuid("discount_id")
         .references(() => discountTable.id),
     createdAt: timestamp("created_at",{
@@ -236,21 +267,6 @@ export const effectsTable = pgTable("effects",{
     headache: integer("headache")
 })
 
-export const productCategoryTable = pgTable("product_category",{
-    id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
-    name: varchar("name").notNull(),
-    description: text("description").notNull(),
-    createdAt: timestamp("created_at",{
-        withTimezone: true
-    }).defaultNow(),
-    modifiedAt: timestamp("modified_at",{
-        withTimezone: true
-    }).defaultNow(),
-    deleted_at: timestamp("deleted_at",{
-        withTimezone: true
-    }).defaultNow()
-})
-
 export const productInventoryTable = pgTable("product_inventory",{
     id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
     productID: uuid("product_id")
@@ -258,23 +274,6 @@ export const productInventoryTable = pgTable("product_inventory",{
         .notNull(),
     quantity: integer("quantity"),
     availability: boolean("availability"),
-    createdAt: timestamp("created_at",{
-        withTimezone: true
-    }).defaultNow(),
-    modifiedAt: timestamp("modified_at",{
-        withTimezone: true
-    }).defaultNow(),
-    deleted_at: timestamp("deleted_at",{
-        withTimezone: true
-    }).defaultNow()
-})
-
-export const discountTable = pgTable("discount",{
-    id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
-    name: varchar("name"),
-    description: text("description"),
-    discountPercentage: decimal("discount_percentage"),
-    active: boolean("active"),
     createdAt: timestamp("created_at",{
         withTimezone: true
     }).defaultNow(),

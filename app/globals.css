@@ -6,6 +6,32 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.header {}
+
+.navbar {}
+
+.strain-card{}
+
+.strain-list{}
+
+.cart {}
+
+.add-to-cart{}
+
+.root-container {}
+
+.menu {}
+
+.checkout{}
+
+.checkout-list{}
+
+.profile-page{}
+
+.order-tracker{}
+
+.
+
 @layer base {
   :root {
     --background: 0 0% 100%;

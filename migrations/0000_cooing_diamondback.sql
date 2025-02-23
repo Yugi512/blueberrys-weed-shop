@@ -1,3 +1,4 @@
+CREATE TYPE "public"."role" AS ENUM('USER', 'ADMIN');--> statement-breakpoint
 CREATE TABLE "cart_item" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"product_id" uuid NOT NULL,
@@ -119,7 +120,6 @@ CREATE TABLE "payment_detail" (
 CREATE TABLE "product_category" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar NOT NULL,
-	"description" text NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now(),
 	"modified_at" timestamp with time zone DEFAULT now(),
 	"deleted_at" timestamp with time zone DEFAULT now(),
@@ -139,21 +139,20 @@ CREATE TABLE "product_inventory" (
 --> statement-breakpoint
 CREATE TABLE "product" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"product_name" varchar NOT NULL,
-	"img_url" text,
-	"type" "type",
+	"name" varchar NOT NULL,
+	"img_url" varchar,
+	"type" varchar,
 	"price" numeric,
-	"thc_level" integer,
-	"description" text,
-	"effects_id" uuid,
+	"thc_level" varchar,
+	"description" varchar,
+	"most_common_terpene" varchar,
 	"category_id" uuid,
-	"inventory_id" uuid,
 	"discount_id" uuid,
 	"created_at" timestamp with time zone DEFAULT now(),
 	"modified_at" timestamp with time zone DEFAULT now(),
 	"deleted_at" timestamp with time zone DEFAULT now(),
 	CONSTRAINT "product_id_unique" UNIQUE("id"),
-	CONSTRAINT "product_product_name_unique" UNIQUE("product_name")
+	CONSTRAINT "product_name_unique" UNIQUE("name")
 );
 --> statement-breakpoint
 CREATE TABLE "shopping_session" (
@@ -214,9 +213,7 @@ ALTER TABLE "order_items" ADD CONSTRAINT "order_items_payment_id_payment_detail_
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_order_detail_id_fk" FOREIGN KEY ("order_id") REFERENCES "public"."order_detail"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "payment_detail" ADD CONSTRAINT "payment_detail_order_id_order_detail_id_fk" FOREIGN KEY ("order_id") REFERENCES "public"."order_detail"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "product_inventory" ADD CONSTRAINT "product_inventory_product_id_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "public"."product"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "product" ADD CONSTRAINT "product_effects_id_effects_id_fk" FOREIGN KEY ("effects_id") REFERENCES "public"."effects"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "product" ADD CONSTRAINT "product_category_id_product_category_id_fk" FOREIGN KEY ("category_id") REFERENCES "public"."product_category"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "product" ADD CONSTRAINT "product_inventory_id_product_inventory_id_fk" FOREIGN KEY ("inventory_id") REFERENCES "public"."product_inventory"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "product" ADD CONSTRAINT "product_discount_id_discount_id_fk" FOREIGN KEY ("discount_id") REFERENCES "public"."discount"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "shopping_session" ADD CONSTRAINT "shopping_session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_address" ADD CONSTRAINT "user_address_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint

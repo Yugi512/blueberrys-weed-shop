@@ -31,12 +31,12 @@ interface Strain {
     img_url: string,
     type: string,
     most_common_terpene: string,
-    price: number,
     thc_level: string,
     description: string,
-    effects: Object,
-    category: Category,
-    inventory: Inventory,
+    // price: number,
+    // effects: Object,
+    // category: Category,
+    // inventory: Inventory,
 }
 
 
