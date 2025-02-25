@@ -67,6 +67,12 @@ export default {
 				300: "#AEB8C4",
 				500: "#9CA6B8"
 			},
+			purple: {
+				250: "#b77df5",
+				400: "#3e00ff",
+				500: "#a15bf2",
+				600: "#033587"
+			}
 		},
 	  borderRadius: {
 		  lg: 'var(--radius)',

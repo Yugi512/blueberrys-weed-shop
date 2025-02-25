@@ -37,7 +37,7 @@ const AuthForm = <T extends FieldValues>({type,schema, defaultValues , onSubmit}
         defaultValues: defaultValues as DefaultValues<T>,
     });
 
-    const handleSubmt: SubmitHandler<T> = async (data) => {
+    const handleSubmit: SubmitHandler<T> = async (data) => {
         const result = await onSubmit(data)
 
         if (result.success){
@@ -45,7 +45,7 @@ const AuthForm = <T extends FieldValues>({type,schema, defaultValues , onSubmit}
                 title: "Success",
                 description: isSignIn
                     ? "You have Successfully signed in"
-                    : "Ypu have successfully signed up",
+                    : "You have successfully signed up",
             })
             router.push("/")
         } else {
@@ -61,9 +61,9 @@ const AuthForm = <T extends FieldValues>({type,schema, defaultValues , onSubmit}
             <h1 className='text-2xl font-semibold text-white'>
                 {isSignIn ? "Welcome back!" : "Create an account"}
             </h1>
-            <p className='text-white'>{isSignIn ? "sign in to see your points and rewards" : "Sign up to receive points and get rewards"}</p>
+            <p className='text-white'>{isSignIn ? "Sign in to see your points and rewards" : "Sign up to receive points and get rewards"}</p>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmt)} className="space-y-6 w-full ">
+                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-full ">
 
                     {Object.keys(defaultValues).map((field) => (
                         <FormField

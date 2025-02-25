@@ -2,17 +2,14 @@
 
 import React from 'react'
 import StrainCard from "@/components/StrainCard";
-import {data} from "@/components/StrainsList";
 
 const Page = async ({params} : {params: Promise<{name: string}>}) => {
     const name = (await params).name
-    const strain = name.replace(/%20/g," ")
-    const strainData = data.find(item => item.name === strain);
-
-    if(!strainData) return <div>Strain not found</div>;
-
+    const strain = name.replace(/%20/g,"-")
     return (
-        <StrainCard strain={strainData} />
+        <div className="bg-blue-800">
+            <StrainCard strain={strain} />
+        </div>
     )
 }
 export default Page

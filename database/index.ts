@@ -437,11 +437,11 @@ export const getProductByName = async (name: string) =>
         .where(eq(productTable.name, name))
         .limit(1);
 // get product effects
-export const getProductsEffects = async () =>
+export const getProductsEffects = async (id: string) =>
     await db
         .select()
         .from(effectsTable)
-        .innerJoin(productTable, eq(effectsTable.productID, productTable.id));
+        .innerJoin(productTable, eq(effectsTable.productID, id));
 
 // export const getProductsEffectsWithEffectsId = async (effectsId: string) =>
 //     await db
@@ -477,11 +477,11 @@ export const getProductsDiscountsWithDiscountId = async (discountId: string) =>
         .innerJoin(discountTable, eq(productTable.discountID, discountId));
 
 // get product inventory
-export const getProductsInventory = async () =>
+export const getProductsInventory = async (id: string) =>
     await db
         .select()
         .from(productTable)
-        .innerJoin(productTable, eq(productInventoryTable.productID, productTable.id));
+        .innerJoin(productTable, eq(productInventoryTable.productID, id));
 
 // export const getProductsInventoryWithInventoryId = async (inventoryId: string) =>
 //     await db
@@ -497,7 +497,7 @@ export const createProduct = async (InsertProduct: InsertProduct) =>
         .returning();
 
 // update
-export const updateProduct = async (id: string,SelectProduct: SelectProduct) =>
+export const updateProduct = async (id: string, SelectProduct: { imgUrl: string }) =>
     await db
         .update(productTable)
         .set(SelectProduct)

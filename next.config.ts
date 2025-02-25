@@ -113,8 +113,10 @@ const nextConfig: NextConfig = {
             // {  protocol:"https" , hostname : "https://images.leafly.com/flower-images/very-berry-haze.jpg"},
             // {  protocol:"https" , hostname : "https://images.leafly.com/flower-images/monkey-thunder.jpg"},
             // {  protocol:"https" , hostname : "https://images.leafly.com/flower-images/city-of-god.jpg"},
-            // {  protocol:"https" , hostname : "https://images.leafly.com/flower-images/Kn55a7RPeQfB8yxYHVcQ_white%20cbg%202.jpg"},
-            { protocol : "https", hostname: "https://cdn-icons-png.flaticon.com/512/2667/2667035.png"}
+            {  protocol:"https" , hostname : "img.freepik.com"},
+            { protocol : "https", hostname: "https://cdn-icons-png.flaticon.com/512/2667/2667035.png"},
+            {protocol: "https", hostname: "images.unsplash.com"}
+
         ]
     }
 };

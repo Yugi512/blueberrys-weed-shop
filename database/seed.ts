@@ -4,7 +4,7 @@ import {productTable} from "@/database/schema";
 
 import {
     createEffects,
-    createProduct, createProductCategories, createProductInventory, deleteEffectsById,
+    createProduct, createProductCategories, createProductInventory, db, deleteEffectsById,
     deleteProductById,
     deleteProductByName, getCategoryByName, getEffects,
     getProductByName, getProductInventory,
@@ -15,8 +15,22 @@ import {eq} from "drizzle-orm"
 
 config({path: '.env.local.local'})
 
-
-getProducts().then(products => {console.log(products);});
+//
+// getProductByName('Runtz').then(product => {console.log(products);});
+// getProducts().then((data) => {
+//     data.map((item) => {
+//         if(item.imgUrl === "https://img.freepik.com/free-psd/crystal-cannabis-leaf-green-marijuana-gemstone_632498-59748.jpg?t=st=1740395347~exp=1740398947~hmac=13dcd7aa1f5bd7fd1819be1e366bdbc536a6c003796011751d2b47818105953d&w=740") {
+//             db.update(productTable)
+//                 .set({
+//                     imgUrl: 'https://img.freepik.com/free-vector/cannabis-leaf-icon_98292-4592.jpg?t=st=1740417533~exp=1740421133~hmac=6cca599f24ad5919eafbd8b0de2c354e5bb21d94a4fed74dee483c10d4a2b03b&w=740',
+//                 })
+//                 .where(eq(productTable.id,item.id))
+//                 .catch(error => {console.log(error)});
+//             // strains.push(item);
+//         }
+//         // strains.push(item);
+//     })
+// })
 
 // getProducts().then((data) => {
 //     const randomInt = Math.floor(Math.random() * 10) + 1;

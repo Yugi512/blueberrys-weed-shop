@@ -1,5 +1,5 @@
 export const FIELD_NAMES = {
-    userName: 'Username',
+    username: 'Username',
     firstName: 'First name',
     lastName: 'Last name',
     email: 'Email',
