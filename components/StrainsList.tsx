@@ -13,7 +13,8 @@ const StrainsList = () => {
             .catch(err => console.log(err));
     }, []);
     console.log(strains);
-
+    // break up the strains into a page that loads like 10 items each and then display them on the pages
+    // figure out how many to display and then look up how to do it on youtube
     return (
         <div className="border-8 grid grid-cols-5 gap-2">
             {strains.map((item: any, index: number) => {

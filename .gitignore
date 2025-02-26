@@ -43,3 +43,4 @@ yarn-error.log*
 next-env.d.ts
 drizzle.ts
 ./database/index.ts
+./database/redis.ts

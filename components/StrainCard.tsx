@@ -113,9 +113,9 @@ const StrainCard = ({strain} : {strain: string}) => {
             .catch(err => console.log(err));
     }, [])
 
-    console.log(typeof data?.effects[0].effects!)
-    console.log(data?.inventory[0].availability!)
-    console.log(data?.inventory[0].quantity!)
+    // console.log(typeof data?.effects[0].effects!)
+    // console.log(data?.inventory[0].availability!)
+    // console.log(data?.inventory[0].quantity!)
 
     // const mapp  =  JSON.parse(data?.effects?[0].map((item)=> {
     //     console.log(item)
@@ -124,6 +124,7 @@ const StrainCard = ({strain} : {strain: string}) => {
 
     if(isLoading) return <h1>Loading...</h1>;
     if(!data) return null;
+    console.log(data?.inventory[0].availability)
 
     return (
         <div id={data?.strain?.id} className="bg-slate-400">
@@ -136,7 +137,8 @@ const StrainCard = ({strain} : {strain: string}) => {
                 </span>
                 <div>
                     <h2>{data?.strain?.price ? data?.strain?.price! : "" }</h2>
-                    <span>{data?.inventory[0].availability! ? "Not Available" : "In Stock"}</span>
+                    <span>{data?.inventory[0].availability ? "in-stock" : "Not Available at the moment"}</span>
+                    <span>{data?.inventory[0].quantity}</span>
                 </div>
                 {/*<div>*/}
                 {/*    /!*{ Object.entries(data?.effects[0].effects!).map((effect,index) =>*!/*/}

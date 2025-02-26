@@ -4,8 +4,8 @@ import { Redis } from "@upstash/redis";
 config({path: `.env.local`});
 
 const redis = new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    url: "https://balanced-dane-14540.upstash.io",
+    token: 'ATjMAAIjcDFmYzBiNWIwYWNlM2I0MTY0YmQ3NTFlMGJkYjY4MzAyMXAxMA',
 });
 
 export default redis;

@@ -40,8 +40,8 @@ export const userAddressTable = pgTable("user_address",{
     city: text("city").notNull(),
     state: text("state").notNull(),
     zip: text("zip").notNull(),
-    telephone: text("telephone").notNull(),
-    mobile: text("mobile").notNull(),
+    telephone: text("telephone").unique(),
+    mobile: text("mobile").unique(),
 })
 
 export const userPaymentTable = pgTable("user_payment",{
@@ -100,9 +100,9 @@ export const orderDetailTable: any = pgTable("order_detail",{
         .references(() => userTable.id)
         .notNull(),
     paymentID: uuid("payment_id")
-        .references(() => paymentDetailTable.id)
-        .notNull(),
+        .references(() => paymentDetailTable.id),
     total: decimal("total").notNull(),
+    completed: boolean("completed").default(false),
     createdAt: timestamp("created_at",{
         withTimezone: true
     }).defaultNow(),
@@ -113,9 +113,9 @@ export const orderDetailTable: any = pgTable("order_detail",{
 
 export const orderItemsTable = pgTable("order_items",{
     id: uuid("id").notNull().unique().defaultRandom().primaryKey(),
-    paymentID: uuid("payment_id")
-        .references(() => paymentDetailTable.id)
-        .notNull(),
+    // paymentID: uuid("payment_id")
+    //     .references(() => paymentDetailTable.id)
+    //     .notNull(),
     orderID: uuid("order_id")
         .references(() => orderDetailTable.id)
         .notNull(),
